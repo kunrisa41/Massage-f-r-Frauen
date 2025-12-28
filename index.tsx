@@ -20,8 +20,14 @@ const colors = {
   black: "#0D0705"
 };
 
-// --- Translations ---
-const translations = {
+// --- Definitions ---
+type Language = 'de' | 'en';
+
+interface TranslationSet {
+  [key: string]: any;
+}
+
+const translations: Record<Language, TranslationSet> = {
   de: {
     nav_home: "Start",
     nav_treatments: "Behandlungen",
@@ -59,7 +65,7 @@ const translations = {
     book_now: "JETZT BUCHEN",
     service1_title: "Nacken- & Rückenmassage",
     service1_tag: "Gezielt. Tiefenwirksam. Entlastend.",
-    service1_intro: "DIESE BEHANDLUNG RICHTET SIES GEZIELT AN MENSCHEN MIT:",
+    service1_intro: "DIESE BEHANDLUNG RICHTET SICH GEZIELT AN MENSCHEN MIT:",
     service1_bullets: [
       "Nacken- und Schulterverspannungen",
       "Rückenbeschwerden",
@@ -149,7 +155,7 @@ const shopInfo = {
 };
 
 const App = () => {
-  const [lang, setLang] = useState<'de' | 'en'>('de');
+  const [lang, setLang] = useState<Language>('de');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -184,10 +190,13 @@ const App = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-7">
-            {['nav_home', 'nav_treatments', 'nav_contact'].map((key, i) => (
-              <button key={key} onClick={() => i === 0 ? window.scrollTo({top:0}) : scrollToSection(['','behandlungen','kontakt'][i])}
-                      className="text-[9px] font-bold uppercase tracking-[0.2em] hover:opacity-60 transition-opacity">
-                {t[key as keyof typeof t]}
+            {['nav_home', 'nav_treatments', 'nav_contact'].map((key) => (
+              <button 
+                key={key} 
+                onClick={() => key === 'nav_home' ? window.scrollTo({top:0, behavior:'smooth'}) : scrollToSection(key === 'nav_treatments' ? 'behandlungen' : 'kontakt')}
+                className="text-[9px] font-bold uppercase tracking-[0.2em] hover:opacity-60 transition-opacity"
+              >
+                {t[key]}
               </button>
             ))}
             <div className="flex bg-black/5 p-1 rounded-full border border-black/5">
@@ -197,7 +206,7 @@ const App = () => {
             <a href={shopInfo.phoneLink} className="px-5 py-2 rounded-full text-[9px] font-bold text-white uppercase tracking-widest transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.nav_book}</a>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2">
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
@@ -270,7 +279,7 @@ const App = () => {
                 <div className="space-y-4">
                   <span className="text-gold text-[9px] font-black uppercase tracking-widest block">{t.service1_intro}</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {t.service1_bullets.map((b, i) => (
+                    {(t.service1_bullets as string[]).map((b, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs font-medium"><Check className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" /> <span>{b}</span></div>
                     ))}
                   </div>
@@ -279,7 +288,7 @@ const App = () => {
                 <div className="pt-2 space-y-2">
                   <span className="text-stone-400 text-[9px] font-bold uppercase tracking-widest block">{t.service1_effect_title}</span>
                   <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-                    {t.service1_effects.map((e, idx) => (
+                    {(t.service1_effects as string[]).map((e, idx) => (
                       <div key={idx} className="flex items-center gap-1.5">
                          <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
                          <span className="text-darkBrown text-[9px] md:text-xs font-bold uppercase tracking-widest opacity-60">{e}</span>
@@ -307,7 +316,7 @@ const App = () => {
                 <div className="space-y-4">
                    <span className="text-gold text-[9px] font-black uppercase tracking-widest block">{t.service2_intro}</span>
                    <div className="flex flex-wrap gap-3">
-                     {t.service2_bullets.map((b, i) => (
+                     {(t.service2_bullets as string[]).map((b, i) => (
                        <span key={i} className="bg-stone-50 border border-stone-100 px-4 py-2 rounded-xl text-[10px] md:text-xs font-bold text-darkBrown">{b}</span>
                      ))}
                    </div>
@@ -361,8 +370,8 @@ const App = () => {
                       {i===3 && <Thermometer className="w-8 h-8" style={{ color: colors.darkGold }} />}
                       {i===4 && <ShieldCheck className="w-8 h-8" style={{ color: colors.darkGold }} />}
                     </div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-darkBrown">{t[`quality_item${i}_title` as keyof typeof t]}</h4>
-                    <p className="text-[9px] md:text-[11px] text-stone-400 leading-relaxed font-medium">{t[`quality_item${i}_desc` as keyof typeof t]}</p>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-darkBrown">{t[`quality_item${i}_title`]}</h4>
+                    <p className="text-[9px] md:text-[11px] text-stone-400 leading-relaxed font-medium">{t[`quality_item${i}_desc`]}</p>
                  </div>
                ))}
              </div>
@@ -456,8 +465,26 @@ const App = () => {
   );
 };
 
-const container = document.getElementById('root');
-if (container) {
-  const root = createRoot(container);
-  root.render(<App />);
+// --- Entry Point ---
+const init = () => {
+  const container = document.getElementById('root');
+  if (container) {
+    try {
+      const root = createRoot(container);
+      root.render(<App />);
+      console.log('App successfully mounted');
+    } catch (error) {
+      console.error('Failed to mount React app:', error);
+      container.innerHTML = '<div style="padding: 20px; text-align: center;">Ein Fehler ist aufgetreten. Bitte laden Sie die Seite neu.</div>';
+    }
+  } else {
+    console.error('Root element not found');
+  }
+};
+
+// Start initialization
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }
