@@ -12,7 +12,7 @@ const colors = {
   darkBrown: "#3D261C",
   lightBrown: "#8B5E3C",
   gold: "#D4AF37",
-  darkGold: "#B8860B", // Darker gold for better contrast on light backgrounds
+  darkGold: "#B8860B", 
   darkRed: "#7C0A02",
   veryDarkRed: "#2A0401",
   cream: "#F9F6F0",
@@ -59,7 +59,7 @@ const translations = {
     book_now: "JETZT BUCHEN",
     service1_title: "Nacken- & Rückenmassage",
     service1_tag: "Gezielt. Tiefenwirksam. Entlastend.",
-    service1_intro: "DIESE BEHANDLUNG RICHTET SICH GEZIELT AN MENSCHEN MIT:",
+    service1_intro: "DIESE BEHANDLUNG RICHTET SIES GEZIELT AN MENSCHEN MIT:",
     service1_bullets: [
       "Nacken- und Schulterverspannungen",
       "Rückenbeschwerden",
@@ -69,7 +69,6 @@ const translations = {
     service1_note: "Durch Drucktechniken, Dehnungen and Mobilisation wird die Muskulatur gelockert und die Durchblutung gefördert.",
     service1_effect_title: "Wirkung:",
     service1_effects: ["spürbare Entlastung", "verbesserte Beweglichkeit", "tiefe Entspannung"],
-    // Service 2
     service2_title: "Kombinationsbehandlung",
     service2_tag: "Maximale Wirkung für Nacken & Rücken",
     service2_intro: "UNSERE KOMBINATIONSMASSAGE VEREINT DIE EFFEKTIVSTEN ELEMENTE:",
@@ -115,7 +114,6 @@ const translations = {
     opening_note: "BY TELEPHONE APPOINTMENT.",
     call_btn: "MAKE APPOINTMENT",
     book_now: "BOOK NOW",
-    // Service 1
     service1_title: "Neck & Back Massage",
     service1_tag: "Targeted. Deep Acting. Relieving.",
     service1_intro: "THIS TREATMENT IS TARGETED AT PEOPLE WITH:",
@@ -128,7 +126,6 @@ const translations = {
     service1_note: "Through pressure techniques, stretching, and mobilization, muscles are loosened and blood circulation is promoted.",
     service1_effect_title: "Effect:",
     service1_effects: ["noticeable relief", "improved mobility", "deep relaxation"],
-    // Service 2
     service2_title: "Combination Treatment",
     service2_tag: "Maximum effect for neck & back",
     service2_intro: "OUR COMBINATION MASSAGE COMBINES THE MOST EFFECTIVE ELEMENTS:",
@@ -190,7 +187,7 @@ const App = () => {
             {['nav_home', 'nav_treatments', 'nav_contact'].map((key, i) => (
               <button key={key} onClick={() => i === 0 ? window.scrollTo({top:0}) : scrollToSection(['','behandlungen','kontakt'][i])}
                       className="text-[9px] font-bold uppercase tracking-[0.2em] hover:opacity-60 transition-opacity">
-                {t[key]}
+                {t[key as keyof typeof t]}
               </button>
             ))}
             <div className="flex bg-black/5 p-1 rounded-full border border-black/5">
@@ -364,8 +361,8 @@ const App = () => {
                       {i===3 && <Thermometer className="w-8 h-8" style={{ color: colors.darkGold }} />}
                       {i===4 && <ShieldCheck className="w-8 h-8" style={{ color: colors.darkGold }} />}
                     </div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-darkBrown">{t[`quality_item${i}_title`]}</h4>
-                    <p className="text-[9px] md:text-[11px] text-stone-400 leading-relaxed font-medium">{t[`quality_item${i}_desc`]}</p>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-darkBrown">{t[`quality_item${i}_title` as keyof typeof t]}</h4>
+                    <p className="text-[9px] md:text-[11px] text-stone-400 leading-relaxed font-medium">{t[`quality_item${i}_desc` as keyof typeof t]}</p>
                  </div>
                ))}
              </div>
