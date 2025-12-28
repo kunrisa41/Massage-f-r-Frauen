@@ -7,7 +7,6 @@ import {
   Thermometer, Fingerprint, Info
 } from 'lucide-react';
 
-// --- Palette Definition ---
 const colors = {
   darkBrown: "#3D261C",
   lightBrown: "#8B5E3C",
@@ -20,14 +19,9 @@ const colors = {
   black: "#0D0705"
 };
 
-// --- Definitions ---
 type Language = 'de' | 'en';
 
-interface TranslationSet {
-  [key: string]: any;
-}
-
-const translations: Record<Language, TranslationSet> = {
+const translations: Record<Language, any> = {
   de: {
     nav_home: "Start",
     nav_treatments: "Behandlungen",
@@ -69,7 +63,7 @@ const translations: Record<Language, TranslationSet> = {
     service1_bullets: [
       "Nacken- und Schulterverspannungen",
       "Rückenbeschwerden",
-      "sitzender Tätigkeit oder körperlicher Belastung",
+      "sitzender Tätigkeit or körperlicher Belastung",
       "stressbedingten Spannungen"
     ],
     service1_note: "Durch Drucktechniken, Dehnungen and Mobilisation wird die Muskulatur gelockert und die Durchblutung gefördert.",
@@ -151,7 +145,7 @@ const shopInfo = {
   country: "Germany",
   phone: "0151 64319130",
   phoneLink: "tel:015164319130",
-  googleMapsUrl: "https://share.google/pdqx9aad1WD1dfox6"
+  googleMapsUrl: "https://maps.app.goo.gl/97goEDK13nSJivCx5"
 };
 
 const App = () => {
@@ -177,7 +171,6 @@ const App = () => {
 
   return (
     <div className="min-h-screen antialiased" style={{ backgroundColor: colors.cream, color: colors.darkBrown }}>
-      {/* Navbar */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'py-1.5 shadow-lg' : 'py-4'}`} 
            style={{ backgroundColor: scrolled ? 'rgba(249, 246, 240, 0.98)' : 'transparent' }}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
@@ -206,12 +199,11 @@ const App = () => {
             <a href={shopInfo.phoneLink} className="px-5 py-2 rounded-full text-[9px] font-bold text-white uppercase tracking-widest transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.nav_book}</a>
           </div>
 
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-darkBrown">
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="fixed inset-0 top-[52px] z-50 flex flex-col p-8 space-y-6 animate-in slide-in-from-top duration-300" style={{ backgroundColor: colors.cream }}>
             <button onClick={() => {window.scrollTo({top:0}); setIsMenuOpen(false)}} className="text-lg font-serif font-bold text-left uppercase">{t.nav_home}</button>
@@ -229,7 +221,6 @@ const App = () => {
       </nav>
 
       <main>
-        {/* Hero */}
         <section className="relative h-[45vh] md:h-screen flex items-center justify-center overflow-hidden">
           <img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&q=80&w=2000" 
                className="absolute inset-0 w-full h-full object-cover" alt="Background" />
@@ -245,7 +236,6 @@ const App = () => {
           </div>
         </section>
 
-        {/* Philosophy */}
         <section className="py-16 md:py-28 px-6 max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
            <div className="w-full md:w-[60%] space-y-4 text-left">
               <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest" style={{ color: colors.darkRed }}>{t.phil_label}</span>
@@ -260,7 +250,6 @@ const App = () => {
            </div>
         </section>
 
-        {/* Treatments */}
         <section id="behandlungen" className="py-16 md:py-28 px-4 md:px-8" style={{ backgroundColor: colors.darkBrown }}>
           <div className="max-w-5xl mx-auto space-y-10">
             <div className="text-center text-white space-y-3 mb-12">
@@ -269,13 +258,11 @@ const App = () => {
                <div className="w-10 h-0.5 bg-gold mx-auto opacity-30"></div>
             </div>
 
-            {/* Service 1 */}
             <div className="bg-white rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
               <div className="p-8 md:p-12 md:w-[68%] space-y-6 text-left">
                 <span className="px-3 py-1.5 rounded-lg text-[8px] md:text-[9px] font-black uppercase tracking-widest" style={{ backgroundColor: colors.darkBrown, color: colors.gold }}>{t.service1_tag}</span>
                 <h3 className="text-xl md:text-3xl font-serif font-bold">{t.service1_title}</h3>
                 <p className="text-stone-500 text-sm md:text-base leading-relaxed">{t.service1_note}</p>
-                
                 <div className="space-y-4">
                   <span className="text-gold text-[9px] font-black uppercase tracking-widest block">{t.service1_intro}</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -284,7 +271,6 @@ const App = () => {
                     ))}
                   </div>
                 </div>
-
                 <div className="pt-2 space-y-2">
                   <span className="text-stone-400 text-[9px] font-bold uppercase tracking-widest block">{t.service1_effect_title}</span>
                   <div className="flex flex-wrap gap-x-5 gap-y-1.5">
@@ -298,16 +284,15 @@ const App = () => {
                 </div>
               </div>
               <div className="bg-stone-50 p-8 md:p-12 md:w-[32%] flex flex-col justify-between items-center text-center border-t md:border-t-0 md:border-l">
-                <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{t.price_label}</span>
+                <span className="text-[10px] font-black text-stone-400 uppercase tracking-[0.3em]">{t.price_label}</span>
                 <div className="flex-1 flex flex-col justify-center py-6">
-                  <div className="text-5xl font-serif font-bold">€50</div>
-                  <span className="text-[8px] font-black opacity-30 uppercase tracking-widest">60 MIN</span>
+                  <div className="text-5xl md:text-6xl font-serif font-bold">€50</div>
+                  <span className="text-[9px] font-black opacity-30 uppercase tracking-[0.2em] mt-2">60 MIN</span>
                 </div>
-                <a href={shopInfo.phoneLink} className="w-full py-4 rounded-xl text-white text-[10px] font-black uppercase tracking-widest shadow-lg transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.book_now}</a>
+                <a href={shopInfo.phoneLink} className="w-full py-5 rounded-xl text-white text-[10px] font-black uppercase tracking-widest shadow-lg transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.book_now}</a>
               </div>
             </div>
 
-            {/* Service 2 */}
             <div className="bg-white rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
               <div className="p-8 md:p-12 md:w-[68%] space-y-6 text-left">
                 <span className="px-3 py-1.5 rounded-lg text-[8px] md:text-[9px] font-black uppercase tracking-widest" style={{ backgroundColor: colors.darkBrown, color: colors.gold }}>{t.service2_tag}</span>
@@ -323,24 +308,21 @@ const App = () => {
                 </div>
               </div>
               <div className="bg-stone-50 p-8 md:p-12 md:w-[32%] flex flex-col justify-between items-center text-center border-t md:border-t-0 md:border-l">
-                <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{t.price_label}</span>
-                <div className="flex-1 flex flex-col justify-center py-6 w-full">
-                  <div className="grid grid-cols-2 md:grid-cols-1 gap-6 w-full">
-                    <div className="space-y-0.5">
-                      <div className="text-3xl md:text-4xl font-serif font-bold">€75</div>
-                      <span className="text-[8px] font-black opacity-30 uppercase tracking-widest">90 MIN</span>
+                <span className="text-[10px] font-black text-stone-400 uppercase tracking-[0.3em]">{t.price_label}</span>
+                <div className="flex-1 flex flex-col justify-center py-6 w-full gap-8">
+                    <div className="space-y-1">
+                      <div className="text-4xl md:text-5xl font-serif font-bold">€75</div>
+                      <span className="text-[9px] font-black opacity-30 uppercase tracking-[0.2em]">90 MIN</span>
                     </div>
-                    <div className="space-y-0.5">
-                      <div className="text-3xl md:text-4xl font-serif font-bold">€100</div>
-                      <span className="text-[8px] font-black opacity-30 uppercase tracking-widest">120 MIN</span>
+                    <div className="space-y-1">
+                      <div className="text-4xl md:text-5xl font-serif font-bold">€100</div>
+                      <span className="text-[9px] font-black opacity-30 uppercase tracking-[0.2em]">120 MIN</span>
                     </div>
-                  </div>
                 </div>
-                <a href={shopInfo.phoneLink} className="w-full py-4 rounded-xl text-white text-[10px] font-black uppercase tracking-widest shadow-lg transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.book_now}</a>
+                <a href={shopInfo.phoneLink} className="w-full py-5 rounded-xl text-white text-[10px] font-black uppercase tracking-widest shadow-lg transition-all hover:scale-105" style={{ backgroundColor: colors.darkRed }}>{t.book_now}</a>
               </div>
             </div>
 
-            {/* Hinweis Box */}
             <div className="bg-white/35 backdrop-blur-md border border-white/40 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 shadow-sm">
                <div className="p-4 rounded-full bg-white/60 flex-shrink-0 shadow-sm">
                   <Info className="w-8 h-8" style={{ color: colors.darkGold }} />
@@ -354,7 +336,6 @@ const App = () => {
           </div>
         </section>
 
-        {/* Quality */}
         <section id="qualitaet" className="py-16 md:py-28 px-6 bg-white">
           <div className="max-w-5xl mx-auto">
              <div className="text-center mb-12">
@@ -378,7 +359,6 @@ const App = () => {
           </div>
         </section>
 
-        {/* Contact */}
         <section id="kontakt" className="py-16 md:py-28 px-6" style={{ backgroundColor: colors.darkBrown }}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <div className="bg-white p-8 md:p-12 rounded-[2.5rem] flex flex-col space-y-8 shadow-2xl relative overflow-hidden">
@@ -421,7 +401,6 @@ const App = () => {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="py-16 md:py-20 px-8 border-t border-black/5" style={{ backgroundColor: colors.cream }}>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
            <div className="space-y-6">
@@ -451,38 +430,22 @@ const App = () => {
           <p className="text-[8px] font-bold uppercase tracking-[0.3em] opacity-40">© Thai Massage für Frauen. All Rights Reserved.</p>
         </div>
       </footer>
-
-      <style>{`
-        @keyframes fade-in-up {
-          from { opacity: 0; transform: translateY(15px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-        }
-      `}</style>
     </div>
   );
 };
 
-// --- Entry Point ---
 const init = () => {
   const container = document.getElementById('root');
   if (container) {
     try {
       const root = createRoot(container);
       root.render(<App />);
-      console.log('App successfully mounted');
-    } catch (error) {
-      console.error('Failed to mount React app:', error);
-      container.innerHTML = '<div style="padding: 20px; text-align: center;">Ein Fehler ist aufgetreten. Bitte laden Sie die Seite neu.</div>';
+    } catch (e) {
+      console.error('Mount Error:', e);
     }
-  } else {
-    console.error('Root element not found');
   }
 };
 
-// Start initialization
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
